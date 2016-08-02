@@ -1,0 +1,66 @@
+angular
+  .module('app', [
+    'ui.router',
+    'lbServices',
+    'uiGmapgoogle-maps'
+  ])
+  .config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
+      $urlRouterProvider) {
+    $stateProvider
+      .state('main', {
+        url: '/main',
+        templateUrl: 'views/all-estradas.html',
+        controller: 'MainController',
+        authenticate: false
+      })
+      .state('avisos', {
+        url: '/avisos',
+        templateUrl: 'views/avisos.html',
+        controller: 'MainController',
+        authenticate: false
+      })
+      .state('temperaturas', {
+        url: '/temperaturas',
+        templateUrl: 'views/temperaturas.html',
+        controller: 'TempsController',
+        authenticate: false
+      })
+      .state('map', {
+        url: '/map',
+        templateUrl: 'views/map.html',
+        controller: 'MapController',
+        authenticate: false
+      })
+      .state('forbidden', {
+        url: '/forbidden',
+        templateUrl: 'views/forbidden.html',
+      })
+      .state('login', {
+        url: '/login',
+        templateUrl: 'views/login.html',
+        controller: 'AuthLoginController'
+      })
+      .state('logout', {
+        url: '/logout',
+        controller: 'AuthLogoutController'
+      })
+      .state('sign-up', {
+        url: '/sign-up',
+        templateUrl: 'views/sign-up-form.html',
+        controller: 'SignUpController',
+      })
+      .state('sign-up-success', {
+        url: '/sign-up/success',
+        templateUrl: 'views/sign-up-success.html'
+      });
+    $urlRouterProvider.otherwise('main');
+  }])
+  .run(['$rootScope', '$state', function($rootScope, $state) {
+    $rootScope.$on('$stateChangeStart', function(event, next) {
+      // redirect to login page if not logged in
+      if (next.authenticate && !$rootScope.currentUser) {
+        event.preventDefault(); //prevent current page from loading
+        $state.go('login');
+      }
+    });
+  }]);

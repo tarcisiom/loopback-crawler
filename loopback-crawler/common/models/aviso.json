@@ -1,0 +1,24 @@
+{
+  "name": "Aviso",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Cor": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "distrito":{
+      "type":"belongsTo",
+      "model":"Distrito",
+      "foreignKey":"id_distrito"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

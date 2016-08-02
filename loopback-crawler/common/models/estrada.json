@@ -1,0 +1,36 @@
+{
+  "name": "Estrada",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Tipo": {
+      "type": "string",
+      "required": false
+    },
+    "Estrada": {
+      "type": "string",
+      "required": false
+    },
+    "Concelho": {
+      "type": "string",
+      "required": false
+    },
+    "Data": {
+      "type": "string",
+      "required": false
+    }
+  },
+  "validations": [],
+  "relations": {
+    "distrito":{
+      "type":"belongsTo",
+      "model":"Distrito",
+      "foreignKey":"id_distrito"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

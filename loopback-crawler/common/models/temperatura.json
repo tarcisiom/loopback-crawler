@@ -1,0 +1,40 @@
+{
+  "name": "Temperatura",
+  "base": "PersistedModel",
+  "idInjection": true,
+  "options": {
+    "validateUpsert": true
+  },
+  "properties": {
+    "Descricao": {
+      "type": "string",
+      "required": true
+    },
+    "Chuva": {
+      "type": "string",
+      "required": true
+    },
+    "Temperatura": {
+      "type": "string",
+      "required": true
+    },
+    "Humidade": {
+      "type": "string",
+      "required": true
+    },
+    "Vento": {
+      "type": "string",
+      "required": true
+    }
+  },
+  "validations": [],
+  "relations": {
+    "cidade":{
+      "type":"belongsTo",
+      "model":"Cidade",
+      "foreignKey":"id_cidade"
+    }
+  },
+  "acls": [],
+  "methods": {}
+}

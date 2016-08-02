@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Searching stuff</title>
+    <link rel="stylesheet" href="/css/style.css"/>
+    <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" type="text/css">
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+  <!--
+    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
+    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+  -->
+  </head>
+  <body>
+    <header>
+      <h1>Search</h1>
+      <h2 ng-show="currentUser">Hello {{currentUser.email}}</h2>
+      <nav>
+        <ul>
+          <li ng-hide="currentUser">
+            <a ui-sref="sign-up" ui-sref-active="active">Sign up</a>
+          </li>
+          <li ng-show="currentUser">
+            <a ui-sref="main" ui-sref-active="active">Results</a>
+          </li>
+          <li ng-show="currentUser">
+            <a ui-sref="avisos" ui-sref-active="active">Avisos</a>
+          </li>
+          <li ng-show="currentUser">
+            <a ui-sref="temperaturas" ui-sref-active="active">Temperaturas</a>
+          </li>
+          <li ng-show="currentUser">
+            <a ui-sref="map" ui-sref-active="active">Map</a>
+          </li>
+          <li ng-hide="currentUser">
+            <a ui-sref="login" ui-sref-active="active">Log in</a>
+          </li>
+          <li ng-show="currentUser">
+            <a ui-sref="logout" ui-sref-active="active">Log out</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+
+    <main ui-view></main>
+
+    <script src="vendor/angular.js"></script>
+    <script src="vendor/angular-resource.js"></script>
+    <script src="vendor/angular-ui-router.js"></script>
+    <script src="vendor/angular-google-maps/dist/angular-google-maps.min.js"></script>
+    <script src="vendor/angular-simple-logger/dist/angular-simple-logger.min.js"></script>
+    <script src='vendor/lodash/dist/lodash.min.js'></script>
+    
+    <script src="js/app.js"></script>
+    <script src="js/services/lb-services.js"></script>
+    <script src="js/controllers/auth.js"></script>
+    <script src="js/controllers/main.js"></script>
+    <script src="js/controllers/map.js"></script>
+    <script src="js/controllers/temps.js"></script>
+    <script src="js/services/auth.js"></script>
+    
+  </body>
+</html>

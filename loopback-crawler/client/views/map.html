@@ -1,0 +1,48 @@
+<section>
+    <div class="row">
+        <div id="map_canvas" class="col-md-9">
+            <ui-gmap-google-map control="map.control" center="map.center" zoom="map.zoom" draggable="true">
+                <ui-gmap-marker coords="marker.coords" options="marker.options" events="marker.events" idkey="marker.id">
+       <!--   
+            <markers>
+                <marker ng-repeat="marker in markers" coords="marker">
+                </marker>
+            </markers>
+        -->
+            </ui-gmap-google-map>
+        </div>
+    </div>
+    <div class="row" style="margin-top:20px;">
+        <button class="btn btn-primary" ng-click="setCenter()">My Position</button>
+    </div>
+    <div class="row">
+        <div style="margin-top:20px;">
+            <!--
+                <option value="BICYCLING">Bicycling</option>
+                <option value="TRANSIT">Transit</option>
+            -->
+            <select id="opts" ng-options="region.code as region.name for region in opts" ng-model="routeMode">
+                <option style="display:none" value="">Choose Travel Mode</option>
+            </select>
+            <form class="form-vertical col-sm-4" role="form">
+                <div class="form-group">
+                    <div class="form-group-item">
+                        <label for="origin" class="col-sm-2 control-label">Origin</label>
+                        <input type="text" id="origin" class="form-control" ng-selected="origClick()"/>
+                    </div>
+                    <div class="form-group-item">
+                        <label for="destination" class="col-sm-2 control-label">Destination</label>
+                        <input type="text" id="destination" class="form-control" ng-selected="destClick()"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-8">
+                        <button class="btn btn-primary" ng-click="getDirections()">Get Directions</button>
+                        <button class="btn btn-primary" ng-click="clearRoute()">Clear</button>
+                    </div>
+                </div>
+            </form>
+            <div id="directionsList" ng-show="directions.showList" class="panel panel-primary"></div>
+        </div>
+    </div>
+</section>
