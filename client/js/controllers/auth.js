@@ -18,7 +18,7 @@ angular
       function($scope, AuthService, $state) {
     AuthService.logout()
       .then(function() {
-        $state.go('main');
+        $state.go('login');
       });
   }])
   .controller('SignUpController', ['$scope', 'AuthService', '$state',

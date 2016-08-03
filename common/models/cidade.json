@@ -17,6 +17,11 @@
       "type":"belongsTo",
       "model":"Distrito",
       "foreignKey":"id_distrito"
+    },
+    "sismo":{
+      "type": "hasOne",
+      "model": "Sismo",
+      "foreignKey": "id_cidade"
     }
   },
   "acls": [],

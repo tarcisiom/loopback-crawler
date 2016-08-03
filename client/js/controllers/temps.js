@@ -1,37 +1,35 @@
 angular
   .module('app')
-  .controller('TempsController',['$scope', 'Aviso','Temperatura' , function($scope, Aviso, Temperatura
+  .controller('TempsController',['$scope', 'Temperatura' , function($scope, Temperatura
      ) {
-    $scope.sortType     = 'Cidade'; // set the default sort type
+    $scope.sortType     = 'Temperatura'; // set the default sort type
     $scope.sortReverse  = false;  // set the default sort order
     $scope.searchBar   = '';     // set the default search/filter 
-
-    
-    /*$scope.avisos = Aviso.find(
-        {
-            filter: {
-                "include":"distrito"
-            }
-        }
-        
-    );
-    */
+ 
     $scope.temperaturas = Temperatura.find({
-            filter:{
+            
+            filter:{ 
                 include: {
                     relation : "cidade",
                     scope: {
-                        include:{
-                            relation: "distrito",
-                            scope:{
-                                include: {
-                                    relation :"aviso"
+                        include:[
+                            {
+                                relation: "distrito",
+                                scope:{
+                                    include: {
+                                        relation :"aviso"
+                                    }
                                 }
+                            },
+                            {
+                                relation:"sismo"
                             }
-                        }
+                        ]
                     }
-                }    
+                }
+                 
             }
+        
             
     });
     console.log($scope.temperaturas);

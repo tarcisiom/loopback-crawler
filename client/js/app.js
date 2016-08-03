@@ -13,12 +13,6 @@ angular
         controller: 'MainController',
         authenticate: false
       })
-      .state('avisos', {
-        url: '/avisos',
-        templateUrl: 'views/avisos.html',
-        controller: 'MainController',
-        authenticate: false
-      })
       .state('temperaturas', {
         url: '/temperaturas',
         templateUrl: 'views/temperaturas.html',
@@ -53,7 +47,7 @@ angular
         url: '/sign-up/success',
         templateUrl: 'views/sign-up-success.html'
       });
-    $urlRouterProvider.otherwise('main');
+    $urlRouterProvider.otherwise('login');
   }])
   .run(['$rootScope', '$state', function($rootScope, $state) {
     $rootScope.$on('$stateChangeStart', function(event, next) {

@@ -30,7 +30,7 @@
   },
   "Role": {
     "dataSource": "db",
-    "public": true
+    "public": false
   },
   "Estrada": {
     "dataSource": "mysqlDS",

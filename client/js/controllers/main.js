@@ -16,23 +16,6 @@ angular
         
     );
 
-   /* $scope.avisos = Aviso.find(
-        {
-            filter: {"include":"distrito"
-             
-            }
-        }
-        
-    );
-    */
-    $scope.temperaturas = Temperatura.find(
-        {
-            filter: {"include":"cidade"
-             
-            }
-        }
-        
-    );
     
   }
   ]);

@@ -16,7 +16,7 @@
                 <tr>
                     <th>
                         <a href="" ng-click="sortType = 'cidade.Nome'; sortReverse = !sortReverse">
-                            Cidade
+                            Localidade
                             <span ng-show="sortType == 'cidade.Nome' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'cidade.Nome' && sortReverse" class="fa fa-caret-up"></span>
                         </a> 
@@ -37,7 +37,7 @@
                     </th>  
                     <th>
                         <a href="" ng-click="sortType = 'Temperatura'; sortReverse = !sortReverse">
-                            Temperatura
+                            Graus
                             <span ng-show="sortType == 'Temperatura' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'Temperatura' && sortReverse" class="fa fa-caret-up"></span>
                         </a> 
@@ -62,7 +62,14 @@
                             <span ng-show="sortType == 'cidade.distrito.aviso.Cor' && !sortReverse" class="fa fa-caret-down"></span>
                             <span ng-show="sortType == 'cidade.distrito.aviso.Cor ' && sortReverse" class="fa fa-caret-up"></span>
                         </a> 
-                    </th>   
+                    </th>
+                    <th>
+                        <a href="" ng-click="sortType = 'cidade.sismo.descricao'; sortReverse = !sortReverse">
+                            Sismo
+                            <span ng-show="sortType == 'cidade.sismo.descricao' && !sortReverse" class="fa fa-caret-down"></span>
+                            <span ng-show="sortType == 'cidade.sismo.descricao' && sortReverse" class="fa fa-caret-up"></span>
+                        </a> 
+                    </th>    
                 </tr>
             </thead>
             <tbody>
@@ -73,7 +80,8 @@
                     <td>{{ road.Temperatura }}</td>
                     <td>{{ road.Humidade }}</td>
                     <td>{{ road.Vento }}</td> 
-                    <td>{{ road.cidade.distrito.aviso.Cor }}</td> 
+                    <td>{{ road.cidade.distrito.aviso.Cor }}</td>
+                    <td>{{ road.cidade.sismo.Descricao }}</td>  
                 </tr>
             </tbody>
         </table>
