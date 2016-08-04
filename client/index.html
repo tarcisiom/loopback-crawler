@@ -30,6 +30,9 @@
             <a ui-sref="temperaturas" ui-sref-active="active">Temperaturas</a>
           </li>
           <li ng-show="currentUser">
+            <a ui-sref="sismos" ui-sref-active="active">Sismos</a>
+          </li>
+          <li ng-show="currentUser">
             <a ui-sref="map" ui-sref-active="active">Map</a>
           </li>
           <li ng-hide="currentUser">
@@ -57,6 +60,7 @@
     <script src="js/controllers/main.js"></script>
     <script src="js/controllers/map.js"></script>
     <script src="js/controllers/temps.js"></script>
+    <script src="js/controllers/sismos.js"></script>
     <script src="js/services/auth.js"></script>
     
   </body>

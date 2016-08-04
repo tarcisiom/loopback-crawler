@@ -13,6 +13,12 @@ angular
         controller: 'MainController',
         authenticate: false
       })
+      .state('sismos', {
+        url: '/sismos',
+        templateUrl: 'views/sismos.html',
+        controller: 'SismosController',
+        authenticate: false
+      })
       .state('temperaturas', {
         url: '/temperaturas',
         templateUrl: 'views/temperaturas.html',

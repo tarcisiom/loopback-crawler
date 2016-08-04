@@ -93,7 +93,7 @@ main input,
 select,
 textarea {
   background:#ddd;
-  border:0;
+  border:1;
   display:inline-block;
   font-family:'courier new';
   margin-bottom:1rem;
@@ -110,3 +110,11 @@ textarea {
 #origin,#destination{width: 175px;}
 
 #opts{width: 400px;}
+
+.green {
+  background-color: green;
+}
+
+.yellow {
+  background-color: yellow;
+}
