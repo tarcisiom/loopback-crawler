@@ -76,6 +76,7 @@ body > header nav li a.active {
 }
 /*main*/
 main section {
+  margin-left: 25px;
   padding:1rem;
 }
 main section article {
@@ -105,11 +106,18 @@ textarea {
   width:300px;
 }
 
-.angular-google-map-container { height: 400px; width: 900px;}
+.angular-google-map-container {
+   height: 400px; 
+   width: 900px;
+}
 
-#origin,#destination{width: 175px;}
+#origin,#destination{
+  width: 255px;
+}
 
-#opts{width: 400px;}
+#opts{
+  width: 400px;
+}
 
 .green {
   background-color: green;
