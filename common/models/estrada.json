@@ -18,6 +18,14 @@
       "type": "string",
       "required": false
     },
+    "lat": {
+      "type": "string",
+      "required": false
+    },
+    "lon": {
+      "type": "string",
+      "required": false
+    },
     "Data": {
       "type": "string",
       "required": false

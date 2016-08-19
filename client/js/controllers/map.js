@@ -9,26 +9,90 @@ angular
         });
     }])
     */
-    .controller('MapController',['$scope', '$log', 'uiGmapGoogleMapApi', function ($scope, $log,uiGmapGoogleMapApi, GoogleMapApi,  $document) {
-        
+    .controller('MapController',['$scope', 'Estrada', '$log', 'uiGmapGoogleMapApi', function ($scope, Estrada, $log,uiGmapGoogleMapApi, GoogleMapApi, $document) {
+        $scope.Rmarkers = [];
+
+       
         $scope.map = {
             "control": {},
             "center": {
-                "latitude": 52.47491894326404,
-                "longitude": -1.8684210293371217
+                "latitude": 41.561616,
+                "longitude": -8.397380
             },
-            "zoom": 15
+            "zoom": 13,
+            /*
+            markersEvents: {
+                click: function(marker, eventName, model, arguments) {
+                    $scope.map.window.model = model;
+                    $scope.map.window.show = true;
+                }
+            },
+            window: {
+                marker: {},
+                show: false,
+                closeClick: function() {
+                    this.show = false;
+                },
+                options: {} // define when map is ready
+            }
+            */
         }; 
+
+        $scope.onClick = function(marker, eventName,model) {
+            model.show = !model.show;
+        };
+        
+        //recolher ocorrencias para colocar nos marcadores  
+        Estrada.find({
+            filter: {"include":"distrito"} 
+        })
+        .$promise.then(function(estradas) {
+            $num = 1;
+            var coords1, latitude, longitude, geocoder;
+            estradas.forEach(function(estrada) {
+                 var icon;
+                 if (estrada.Tipo=='Trabalhos') {
+                     icon ='../../imagens/trabalhos.png';
+                 }
+                 if (estrada.Tipo=='Condicionamento') {
+                     icon ='../../imagens/alert.png';
+                 }
+                 if (estrada.Tipo=='Outros') {
+                     icon ='../../imagens/outros.png';
+                 }
+                 var marker = {
+                    id: $num,
+                    coords: {
+                        latitude: estrada.lat,
+                        longitude: estrada.lon
+                    },
+                    title: estrada.Tipo + " - " + estrada.Concelho,
+                    data: estrada.Data,
+                    show: false,
+                    options: {
+                        icon:icon
+                    }
+                };
+                $scope.Rmarkers.push(marker);
+                $num++;
+            });
+        },
+        function(err){
+
+        });
+       
         $scope.opts = [
             {
                 name: "Carro",
-                code: google.maps.TravelMode.DRIVING},
+                code: google.maps.TravelMode.DRIVING
+            },
             {
                 name: "A Pé",
-                code: google.maps.TravelMode.WALKING},
+                code: google.maps.TravelMode.WALKING
+            }
         ];
-         
-        $scope.marker = {
+        /* 
+        $scope.marker1 = {
             id: 0,
             coords: {
                 latitude: 52.47491894326404,
@@ -37,15 +101,15 @@ angular
             options: { draggable: true },
             events: {
                 dragend: function (marker, eventName, args) {
-                    $scope.marker.options = {
+                    $scope.marker1.options = {
                         draggable: true,
-                        labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+                        labelContent: "lat: " + $scope.marker1.coords.latitude + ' ' + 'lon: ' + $scope.marker1.coords.longitude,
                         labelAnchor: "100 0", 
                         labelClass: "marker-labels"
                     };
                 }
             }
-        };
+        };*/
        /* var events = {
             places_changed: function (searchBox) {
                 var place = searchBox.getPlaces();
@@ -122,34 +186,37 @@ angular
         // get current browser position
         navigator.geolocation.getCurrentPosition(function(location) {
             $latitude = location.coords.latitude;
-            $longitude =location.coords.longitude;
+            $longitude = location.coords.longitude;
         }) 
        
         // set location based on users current gps location 
         $scope.setCenter = function () {
+            
             $scope.map.center = {
                 latitude : $latitude,
                 longitude: $longitude
             }
-            $scope.marker = {
-                id: 1,
+            $scope.marker1 = {
+                id: 0,
                 coords: {
                     latitude : $latitude,
                     longitude: $longitude
                 },
+                title: "A minha localização"
+                /*,
                 options: { draggable: true },
                 events: {
                     dragend: function (marker, eventName, args) {
-
-                        $scope.marker.options = {
+                        $scope.marker1.options = {
                             draggable: true,
-                            labelContent: "lat: " + $scope.marker.coords.latitude + ' ' + 'lon: ' + $scope.marker.coords.longitude,
+                            labelContent: "lat: " + $scope.marker1.coords.latitude + ' ' + 'lon: ' + $scope.marker1.coords.longitude,
                             labelAnchor: "100 0",
                             labelClass: "marker-labels"
                         };
                     }
-                }
+                }*/
             };
+            $scope.Rmarkers.push($scope.marker1);
         }
         
         // auto complete do googlemaps
@@ -187,4 +254,7 @@ angular
             );
            
         }
+
+
+
 }]);
