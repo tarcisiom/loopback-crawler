@@ -10,9 +10,10 @@ angular
     }])
     */
     .controller('MapController',['$scope', 'Estrada', 'Temperatura', '$log', 'uiGmapGoogleMapApi', function ($scope, Estrada, Temperatura, $log,uiGmapGoogleMapApi, GoogleMapApi, $document) {
+        // lista de marcadores
         $scope.Rmarkers = [];
 
-       
+       //mapa
         $scope.map = {
             "control": {},
             "center": {
@@ -22,6 +23,7 @@ angular
             "zoom": 13,
         }; 
 
+        //click no marcador abre a window
         $scope.onClick = function(marker, eventName,model) {
             model.show = !model.show;
         };
@@ -65,9 +67,7 @@ angular
 
         });
        
-       
-
-
+        // opções de modo de locução
         $scope.opts = [
             {
                 name: "Carro",
@@ -103,7 +103,6 @@ angular
                 
             }
         };
-        $scope.searchbox = { template: 'searchbox.tpl.html', events: events };
      */                         
         // instantiate google map objects for directions
         var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -120,37 +119,33 @@ angular
         
         // get directions using google maps api
         $scope.getDirections = function () {
-          if (angular.isDefined($scope.routeMode) ) {
-              
-            var request = {
-                origin: $scope.directions.origin,
-                destination: $scope.directions.destination,
-                provideRouteAlternatives: true,
-                travelMode: $scope.routeMode
-            };
-            $log.log(request);
-            directionsService.route(request, function (response, status) {
-                if (status === google.maps.DirectionsStatus.OK) {
-                    directionsDisplay.setDirections(response);
-                    directionsDisplay.setMap($scope.map.control.getGMap());
-                    directionsDisplay.setPanel(document.getElementById('directionsList'));
-                    directionsDisplay.setOptions({
-                        draggable:true     
-                    });
-              /*      directionsDisplay.addListener('directions_changed', function () {
-                        computeTotalDistance(directionsDisplay.getDirections());
-                    });
-                */
-                    $scope.directions.showList = true;
-                
-                } else {
-                alert('Google route unsuccesfull!');
-                }
+            if (angular.isDefined($scope.routeMode) ) {
+                var request = {
+                    origin: $scope.directions.origin,
+                    destination: $scope.directions.destination,
+                    provideRouteAlternatives: true,
+                    travelMode: $scope.routeMode
+                };
+                directionsService.route(request, function (response, status) {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        directionsDisplay.setDirections(response);
+                        directionsDisplay.setMap($scope.map.control.getGMap());
+                        directionsDisplay.setPanel(document.getElementById('directionsList'));
+                        directionsDisplay.setOptions({
+                            draggable:true     
+                        });
+                    /*      directionsDisplay.addListener('directions_changed', function () {
+                            computeTotalDistance(directionsDisplay.getDirections());
+                        });
+                    */
+                        $scope.directions.showList = true;
+                    } else {
+                        alert('Google route unsuccesfull!');
+                    }
             });
-          } else {
-              alert('Choose a Travel Mode');
-          }  
-          
+            } else {
+                alert('Choose a Travel Mode');
+            }  
         };
         
         // get current browser position
@@ -161,7 +156,6 @@ angular
        
         // set location based on users current gps location 
         $scope.setCenter = function () {
-            
             $scope.map.center = {
                 latitude : $latitude,
                 longitude: $longitude
@@ -184,13 +178,11 @@ angular
         
         // limpar um percurso
         $scope.clearRoute = function() {
-            
             //directionsDisplay.setMap(null);
             //directionsDisplay = new google.maps.DirectionsRenderer();
             //directionsDisplay.setDirections({ routes: [] }); 
-             //$scope.routeMode = undefined;
+            //$scope.routeMode = undefined;
             directionsDisplay.set('directions', null);
-            
         };
         
         function autocomp(inp, local) {

@@ -30,7 +30,14 @@
   },
   "Role": {
     "dataSource": "db",
-    "public": false
+    "public": false,
+    "options": {
+      "emailVerificationRequired": true
+    }
+  },
+  "user": {
+    "dataSource": "mysqlDS",
+    "public": true
   },
   "Estrada": {
     "dataSource": "mysqlDS",
