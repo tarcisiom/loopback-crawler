@@ -9,7 +9,7 @@ angular
         });
     }])
     */
-    .controller('MapController',['$scope', 'Estrada', '$log', 'uiGmapGoogleMapApi', function ($scope, Estrada, $log,uiGmapGoogleMapApi, GoogleMapApi, $document) {
+    .controller('MapController',['$scope', 'Estrada', 'Temperatura', '$log', 'uiGmapGoogleMapApi', function ($scope, Estrada, Temperatura, $log,uiGmapGoogleMapApi, GoogleMapApi, $document) {
         $scope.Rmarkers = [];
 
        
@@ -20,22 +20,6 @@ angular
                 "longitude": -8.397380
             },
             "zoom": 13,
-            /*
-            markersEvents: {
-                click: function(marker, eventName, model, arguments) {
-                    $scope.map.window.model = model;
-                    $scope.map.window.show = true;
-                }
-            },
-            window: {
-                marker: {},
-                show: false,
-                closeClick: function() {
-                    this.show = false;
-                },
-                options: {} // define when map is ready
-            }
-            */
         }; 
 
         $scope.onClick = function(marker, eventName,model) {
@@ -81,6 +65,9 @@ angular
 
         });
        
+       
+
+
         $scope.opts = [
             {
                 name: "Carro",
@@ -91,25 +78,7 @@ angular
                 code: google.maps.TravelMode.WALKING
             }
         ];
-        /* 
-        $scope.marker1 = {
-            id: 0,
-            coords: {
-                latitude: 52.47491894326404,
-                longitude: -1.8684210293371217
-            },
-            options: { draggable: true },
-            events: {
-                dragend: function (marker, eventName, args) {
-                    $scope.marker1.options = {
-                        draggable: true,
-                        labelContent: "lat: " + $scope.marker1.coords.latitude + ' ' + 'lon: ' + $scope.marker1.coords.longitude,
-                        labelAnchor: "100 0", 
-                        labelClass: "marker-labels"
-                    };
-                }
-            }
-        };*/
+        
        /* var events = {
             places_changed: function (searchBox) {
                 var place = searchBox.getPlaces();
@@ -159,6 +128,7 @@ angular
                 provideRouteAlternatives: true,
                 travelMode: $scope.routeMode
             };
+            $log.log(request);
             directionsService.route(request, function (response, status) {
                 if (status === google.maps.DirectionsStatus.OK) {
                     directionsDisplay.setDirections(response);
@@ -203,18 +173,6 @@ angular
                     longitude: $longitude
                 },
                 title: "A minha localização"
-                /*,
-                options: { draggable: true },
-                events: {
-                    dragend: function (marker, eventName, args) {
-                        $scope.marker1.options = {
-                            draggable: true,
-                            labelContent: "lat: " + $scope.marker1.coords.latitude + ' ' + 'lon: ' + $scope.marker1.coords.longitude,
-                            labelAnchor: "100 0",
-                            labelClass: "marker-labels"
-                        };
-                    }
-                }*/
             };
             $scope.Rmarkers.push($scope.marker1);
         }
@@ -235,26 +193,83 @@ angular
             
         };
         
+        function autocomp(inp, local) {
+            var auto = new google.maps.places.Autocomplete(inp);
+            google.maps.event.addListener(auto, 'place_changed',function() { 
+                var place = auto.getPlace();
+                var address = '';
+                if (place.address_components) {
+                    address = [
+                    (place.address_components[0] && place.address_components[0].short_name || ''),
+                    (place.address_components[1] && place.address_components[1].short_name || ''),
+                    (place.address_components[2] && place.address_components[2].short_name || '')
+                    ].join(' ');
+                }
+                // nomes dos lugares
+               // $log.log(auto.getPlace().name +" - " + address);
+                
+                local = place.geometry.location;
+            });
+        }
         
-        $scope.origClick = function () {
+        $scope.origClick = autocomp(input, $scope.directions.origin); /*function () {
+            /*
             var auto = new google.maps.places.Autocomplete(input);
-            google.maps.event.addListener(auto, 'place_changed',
-                function() { 
-                    $scope.directions.origin = auto.getPlace().geometry.location;
-                } 
-            ); 
+            google.maps.event.addListener(auto, 'place_changed',function() { 
+                var place = auto.getPlace();
+                var address = '';
+                if (place.address_components) {
+                    address = [
+                        (place.address_components[0] && place.address_components[0].short_name || ''),
+                        (place.address_components[1] && place.address_components[1].short_name || ''),
+                        (place.address_components[2] && place.address_components[2].short_name || '')
+                    ].join(' ');
+                }
+                $log.log(auto.getPlace().name +" - " + address);
+                
+                $scope.directions.origin = place.geometry.location;
+            }); 
         }
-     
-        $scope.destClick = function () {
-           var auto1 = new google.maps.places.Autocomplete(input1);
-           google.maps.event.addListener(auto1, 'place_changed',
-                function() { 
-                    $scope.directions.destination = auto1.getPlace().geometry.location;
-                } 
-            );
-           
-        }
+        */
 
+        $scope.destClick = autocomp(input1, $scope.directions.destination);/*function () {
+            var auto1 = new google.maps.places.Autocomplete(input1);
+            google.maps.event.addListener(auto1, 'place_changed',function() { 
+                $scope.directions.destination = auto1.getPlace().geometry.location;
+            });
+        }
+        */           
+       
+        //recolher alertas para a origem e destino $scope.directions.origin  $scope.directions.destination
+        $scope.alertClick = function(){
+            if ($scope.directions.origin!=null) {
+                
+            } else {
+                alert('Origem não escolhida');
+            }
+    /* 
+            Temperatura.find({
+                filter:{ 
+                    include: {
+                        relation : "cidade",
+                        scope: {
+                            include:[{
+                                    relation: "distrito",
+                                    scope:{
+                                        include: {
+                                            relation :"aviso"
+                                        }
+                                    }
+                                },
+                                {
+                                    relation:"sismo"
+                                }]
+                        }
+                    }
+                }
+            })
+*/
+        }
 
 
 }]);
