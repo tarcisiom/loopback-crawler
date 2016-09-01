@@ -10,7 +10,7 @@ angular
     $scope.login = function() {
       AuthService.login($scope.user.email, $scope.user.password)
         .then(function() {
-          $state.go('main');
+          $state.go('estradas');
         });
     };
   }])

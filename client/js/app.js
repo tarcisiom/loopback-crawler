@@ -7,11 +7,12 @@ angular
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
       $urlRouterProvider) {
     $stateProvider
-      .state('main', {
-        url: '/main',
+       
+      .state('estradas', {
+        url: '/estradas',
         templateUrl: 'views/all-estradas.html',
-        controller: 'MainController',
-        authenticate: false
+        controller: 'EstradasController',
+        authenticate: true
       })
       .state('sismos', {
         url: '/sismos',

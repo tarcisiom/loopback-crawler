@@ -1,15 +1,21 @@
 angular
   .module('app')
-  .controller('MainController',['$scope', 'Estrada',   function($scope, Estrada 
-     ) {
-    $scope.sortType     = 'Tipo'; // set the default sort type
-    $scope.sortReverse  = false;  // set the default sort order
-    $scope.searchBar   = '';     // set the default search/filter 
-
-    $scope.estradas = Estrada.find({
-            filter: {"include":"distrito"}
-    });
+  .controller('MainController',  ['$scope','$state','AuthService', 'User','$rootScope' ,
+  function($scope, $state, AuthService, User, $rootScope) {
+       
+    $scope.refreshCurrentUser = function () {
+        $rootScope.currentUser  = User.getCurrent();
+    }
 
     
-  }
+   /*
+    AuthService.ensureHasCurrentUser(function () {
+      
+      $scope.refreshCurrentUser();
+    });
+  */
+
+    }
+    
   ]);
+  

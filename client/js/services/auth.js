@@ -1,7 +1,7 @@
 angular
   .module('app')
-  .factory('AuthService', ['User', '$q', '$rootScope', function(User, $q,
-      $rootScope) {
+  .factory('AuthService', ['User', '$q', '$rootScope', function(User, $q,$rootScope) {
+    
     function login(email, password) {
       return User
         .login({email: email, password: password})
@@ -32,6 +32,8 @@ angular
        })
        .$promise;
     }
+
+     
 
     return {
       login: login,
