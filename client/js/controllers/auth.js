@@ -2,6 +2,7 @@ angular
   .module('app')
   .controller('AuthLoginController', ['$scope', 'AuthService', '$state',
       function($scope, AuthService, $state) {
+    
     $scope.user = {
       email: 'foo@bar.com',
       password: 'foobar'
@@ -13,6 +14,7 @@ angular
           $state.go('estradas');
         });
     };
+    
   }])
   .controller('AuthLogoutController', ['$scope', 'AuthService', '$state',
       function($scope, AuthService, $state) {

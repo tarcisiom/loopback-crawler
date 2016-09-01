@@ -8,14 +8,20 @@ angular
     }
 
     
-   /*
+    
     AuthService.ensureHasCurrentUser(function () {
       
       $scope.refreshCurrentUser();
     });
-  */
+    
+    $scope.logout = function () {
+        AuthService.logout(function () {
+          CoreService.toastSuccess('Logged out', 'You are logged out!');
+          $state.go('login');
+        });
+      };
 
-    }
+  }
     
   ]);
   

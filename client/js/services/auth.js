@@ -1,6 +1,6 @@
 angular
   .module('app')
-  .factory('AuthService', ['User', '$q', '$rootScope', function(User, $q,$rootScope) {
+  .factory('AuthService', ['User', '$q', '$rootScope', function( User, $q,$rootScope) {
     
     function login(email, password) {
       return User
@@ -12,6 +12,8 @@ angular
             tokenId: response.id,
             email: email
           };
+        }, function () {
+            console.log('User.login() err', arguments);
         });
     }
 
@@ -33,11 +35,19 @@ angular
        .$promise;
     }
 
-     
+    function ensureHasCurrentUser(cb){
+      if ($rootScope.currentUser) {
+        console.log('Using cached current user.');
+      }
+      cb($rootScope.currentUser);
+    }
 
     return {
       login: login,
       logout: logout,
-      register: register
+      register: register,
+      ensureHasCurrentUser: ensureHasCurrentUser
     };
+    
+     
   }]);
