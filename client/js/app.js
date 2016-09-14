@@ -7,30 +7,25 @@ angular
   .config(['$stateProvider', '$urlRouterProvider', function($stateProvider,
       $urlRouterProvider) {
     $stateProvider
-       
       .state('estradas', {
         url: '/estradas',
         templateUrl: 'views/all-estradas.html',
-        controller: 'EstradasController',
-        authenticate: true
+        controller: 'EstradasController'
       })
       .state('sismos', {
         url: '/sismos',
         templateUrl: 'views/sismos.html',
-        controller: 'SismosController',
-        authenticate: false
+        controller: 'SismosController'
       })
       .state('temperaturas', {
         url: '/temperaturas',
         templateUrl: 'views/temperaturas.html',
-        controller: 'TempsController',
-        authenticate: false
+        controller: 'TempsController'
       })
       .state('map', {
         url: '/map',
         templateUrl: 'views/map.html',
-        controller: 'MapController',
-        authenticate: false
+        controller: 'MapController'
       })
       .state('forbidden', {
         url: '/forbidden',
@@ -54,14 +49,7 @@ angular
         url: '/sign-up/success',
         templateUrl: 'views/sign-up-success.html'
       });
-    $urlRouterProvider.otherwise('login');
-  }])
-  .run(['$rootScope', '$state', function($rootScope, $state) {
-    $rootScope.$on('$stateChangeStart', function(event, next) {
-      // redirect to login page if not logged in
-      if (next.authenticate && !$rootScope.currentUser) {
-        event.preventDefault(); //prevent current page from loading
-        $state.go('login');
-      }
-    });
+    // $urlRouterProvider.otherwise('login');
   }]);
+  
+  

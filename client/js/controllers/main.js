@@ -4,22 +4,21 @@ angular
   function($scope, $state, AuthService, User, $rootScope) {
        
     $scope.refreshCurrentUser = function () {
-        $rootScope.currentUser  = User.getCurrent();
+          User.getCurrent().$promise.then(function(res) {
+            $rootScope.currentUser = res;
+          }, function(err) {
+            
+          });
+          
     }
 
     
     
     AuthService.ensureHasCurrentUser(function () {
-      
       $scope.refreshCurrentUser();
     });
     
-    $scope.logout = function () {
-        AuthService.logout(function () {
-          CoreService.toastSuccess('Logged out', 'You are logged out!');
-          $state.go('login');
-        });
-      };
+    
 
   }
     

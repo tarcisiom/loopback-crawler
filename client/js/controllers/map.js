@@ -62,9 +62,6 @@ angular
                 $scope.Rmarkers.push(marker);
                 $num++;
             });
-        },
-        function(err){
-
         });
        
         // opções de modo de locução
@@ -115,7 +112,14 @@ angular
           destination: "",
           showList: false
         };
-        
+        $scope.alertOrig="";
+        $scope.alertDest="";
+        $scope.alerts = {
+            showOrig :false,
+            showDest : false,
+        };
+        $scope.origAlert = $scope.destAlert = [];
+            
         
         // get directions using google maps api
         $scope.getDirections = function () {
@@ -126,6 +130,7 @@ angular
                     provideRouteAlternatives: true,
                     travelMode: $scope.routeMode
                 };
+                
                 directionsService.route(request, function (response, status) {
                     if (status === google.maps.DirectionsStatus.OK) {
                         directionsDisplay.setDirections(response);
@@ -139,12 +144,13 @@ angular
                         });
                     */
                         $scope.directions.showList = true;
+                        getAlert();
                     } else {
-                        alert('Google route unsuccesfull!');
+                        alert('Rota da Google não encontrada');
                     }
             });
             } else {
-                alert('Choose a Travel Mode');
+                alert('Escolha o método de viagem');
             }  
         };
         
@@ -185,82 +191,145 @@ angular
             directionsDisplay.set('directions', null);
         };
         
-        function autocomp(inp, local) {
-            var auto = new google.maps.places.Autocomplete(inp);
-            google.maps.event.addListener(auto, 'place_changed',function() { 
-                var place = auto.getPlace();
-                var address = '';
-                if (place.address_components) {
-                    address = [
-                    (place.address_components[0] && place.address_components[0].short_name || ''),
-                    (place.address_components[1] && place.address_components[1].short_name || ''),
-                    (place.address_components[2] && place.address_components[2].short_name || '')
-                    ].join(' ');
-                }
-                // nomes dos lugares
-               // $log.log(auto.getPlace().name +" - " + address);
-                
-                local = place.geometry.location;
-            });
-        }
         
-        $scope.origClick = autocomp(input, $scope.directions.origin); /*function () {
-            /*
+        $scope.origClick = function () {
+            
             var auto = new google.maps.places.Autocomplete(input);
             google.maps.event.addListener(auto, 'place_changed',function() { 
                 var place = auto.getPlace();
                 var address = '';
                 if (place.address_components) {
-                    address = [
-                        (place.address_components[0] && place.address_components[0].short_name || ''),
-                        (place.address_components[1] && place.address_components[1].short_name || ''),
-                        (place.address_components[2] && place.address_components[2].short_name || '')
-                    ].join(' ');
+                    if(place.address_components[0].long_name == place.address_components[1].long_name){
+                         $scope.alertOrig = place.address_components[0].long_name;
+                    }
+                    else{
+                        if(place.address_components[1].long_name == place.address_components[2].long_name){
+                            $scope.alertOrig = place.address_components[1].long_name;
+                        }
+                    }
+
                 }
-                $log.log(auto.getPlace().name +" - " + address);
-                
                 $scope.directions.origin = place.geometry.location;
             }); 
         }
-        */
+        
 
-        $scope.destClick = autocomp(input1, $scope.directions.destination);/*function () {
+        $scope.destClick = function () {
             var auto1 = new google.maps.places.Autocomplete(input1);
             google.maps.event.addListener(auto1, 'place_changed',function() { 
+                var place = auto1.getPlace();
+                var address = '';
+                if (place.address_components) {
+                    if(place.address_components[0].long_name == place.address_components[1].long_name){
+                         $scope.alertDest = place.address_components[0].long_name;
+                    }
+                    else{
+                        for(var i=1;i<place.address_components.length;i++) {
+                            if(place.address_components[i].long_name == "Portugal"){
+                                $scope.alertDest = place.address_components[i-2].long_name;
+                            }
+                        }
+                    }
+                } 
                 $scope.directions.destination = auto1.getPlace().geometry.location;
             });
         }
-        */           
+                  
        
         //recolher alertas para a origem e destino $scope.directions.origin  $scope.directions.destination
-        $scope.alertClick = function(){
-            if ($scope.directions.origin!=null) {
+        function getAlert() {
+            $scope.origAlert =[];
+            $scope.destAlert = [];
+            
+            if ($scope.alertOrig!="") {
                 
-            } else {
-                alert('Origem não escolhida');
-            }
-    /* 
-            Temperatura.find({
-                filter:{ 
-                    include: {
-                        relation : "cidade",
-                        scope: {
-                            include:[{
-                                    relation: "distrito",
-                                    scope:{
-                                        include: {
-                                            relation :"aviso"
+                Temperatura.find({
+                    filter:{ 
+                        include: {
+                            relation : "cidade",
+                            scope: {
+                                include:[{
+                                        relation: "distrito",
+                                        scope:{
+                                            include: {
+                                                relation :"aviso"
+                                            }
                                         }
-                                    }
-                                },
-                                {
-                                    relation:"sismo"
-                                }]
+                                    },
+                                    {
+                                        relation:"sismo"
+                                    }]
+                            }
                         }
                     }
+                }).$promise.then(function(temperaturas){
+                    temperaturas.forEach(function(temperatura) {
+                        if(temperatura.cidade.Nome==$scope.alertOrig){
+                            //$scope.alerts.orig = temperatura;
+                            $scope.alerts.showOrig =true;
+                             
+                            //$scope.origAlert = temperatura;
+                            console.log(temperatura);
+                            $scope.origAlert.push(temperatura);
+
+                        }
+                    });
+                },function(err){
+                    console.log(err);
+                    alert('Alerta na Origem não encontrado');
+                });
+            } 
+            if($scope.alertDest!=""){
+                Temperatura.find({
+                    filter:{ 
+                        include: {
+                            relation : "cidade",
+                            scope: {
+                                include:[{
+                                        relation: "distrito",
+                                        scope:{
+                                            include: {
+                                                relation :"aviso"
+                                            }
+                                        }
+                                    },
+                                    {
+                                        relation:"sismo"
+                                    }]
+                            }
+                        }
+                    }
+                }).$promise.then(function(temperaturas){
+                    temperaturas.forEach(function(temperatura) {
+                        if(temperatura.cidade.Nome==$scope.alertDest){
+                           // $scope.alerts.dest = temperatura;
+                            $scope.alerts.showDest =true;
+                        //    $scope.destAlert = temperatura;
+                            console.log(temperatura);
+                            $scope.destAlert.push(temperatura);
+                        }
+                    })
+                    
+                    
+                },function(err){
+                    console.log(err);
+                    alert('Alerta no Destino não encontrado');
+                });
+                
+
+            }
+            else {
+                if($scope.alertOrig==""){
+                    alert('Origem não escolhida ou alerta não encontrado');
                 }
-            })
-*/
+                if($scope.alertDest==""){
+                    alert('Destino não escolhido ou alerta não encontrado');
+                }
+            }
+            console.log($scope.destAlert);
+            console.log($scope.origAlert);
+                        
+                        
         }
 
 

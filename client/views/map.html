@@ -57,7 +57,62 @@
                 </form>
             </div>
             <div class="col-sm-6">
-                <button class="btn btn-primary" ng-click="alertClick()">Obter Alertas</button>
+                <div ng-show="alerts.showOrig" class="panel panel-primary">
+                    <table class="table table-striped table-bordered" cellspacing="11" border="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th> Localidade </th>
+                                <th> Descrição </th> 
+                                <th> Chuva </th>  
+                                <th> Graus </th>  
+                                <th> Humidade </th>  
+                                <th> Vento </th>   
+                                <th> Alerta </th>
+                                <th> Sismo </th>    
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-repeat="alert in origAlert">
+                                <td>{{ alert.cidade.Nome }}</td>
+                                <td>{{ alert.Descricao }}</td>
+                                <td>{{ alert.Chuva }}</td>
+                                <td>{{ alert.Temperatura }}</td>
+                                <td>{{ alert.Humidade }}</td>
+                                <td>{{ alert.Vento }}</td> 
+                                <td>{{ alert.cidade.distrito.aviso.Cor }}</td>
+                                <td>{{ alert.cidade.sismo.Descricao }}</td>  
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <div ng-show="alerts.showDest" class="panel panel-primary">
+                    <table class="table table-striped table-bordered" cellspacing="11" border="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th> Localidade </th>
+                                <th> Descrição </th> 
+                                <th> Chuva </th>  
+                                <th> Graus </th>  
+                                <th> Humidade </th>  
+                                <th> Vento </th>   
+                                <th> Alerta </th>
+                                <th> Sismo </th>    
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>{{ destAlert[0].cidade.Nome }}</td>
+                                <td>{{ destAlert[0].Descricao }}</td>
+                                <td>{{ destAlert[0].Chuva }}</td>
+                                <td>{{ destAlert[0].Temperatura }}</td>
+                                <td>{{ destAlert[0].Humidade }}</td>
+                                <td>{{ destAlert[0].Vento }}</td> 
+                                <td>{{ destAlert[0].cidade.distrito.aviso.Cor }}</td>
+                                <td>{{ destAlert[0].cidade.sismo.Descricao }}</td>  
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         <div class="row">

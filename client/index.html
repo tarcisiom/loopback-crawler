@@ -16,15 +16,15 @@
   </head>
   <body ng-controller="MainController">
     <header>
-      <h1>Search</h1>
-      <h2 ng-show="currentUser">Hello {{currentUser.email}}</h2>
+      <h1>SRH</h1>
+      <h2 ng-show="currentUser">Olá {{currentUser.email}}</h2>
       <nav>
         <ul>
           <li ng-hide="currentUser">
             <a ui-sref="sign-up" ui-sref-active="active">Sign up</a>
           </li>
           <li ng-show="currentUser">
-            <a ui-sref="estradas" ui-sref-active="active">Results</a>
+            <a ui-sref="estradas" ui-sref-active="active">Ocorrências</a>
           </li>
           <li ng-show="currentUser">
             <a ui-sref="temperaturas" ui-sref-active="active">Temperaturas</a>
@@ -33,7 +33,7 @@
             <a ui-sref="sismos" ui-sref-active="active">Sismos</a>
           </li>
           <li ng-show="currentUser">
-            <a ui-sref="map" ui-sref-active="active">Map</a>
+            <a ui-sref="map" ui-sref-active="active">Mapa</a>
           </li>
           <li ng-hide="currentUser">
             <a ui-sref="login" ui-sref-active="active">Log in</a>
@@ -63,6 +63,6 @@
     <script src="js/controllers/temps.js"></script>
     <script src="js/controllers/sismos.js"></script>
     <script src="js/services/auth.js"></script>
-    
+    <script src="js/config/auth.js"></script>
   </body>
 </html>
