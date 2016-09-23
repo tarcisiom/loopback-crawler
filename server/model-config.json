@@ -35,10 +35,6 @@
       "emailVerificationRequired": true
     }
   },
-  "user": {
-    "dataSource": "mysqlDS",
-    "public": true
-  },
   "Estrada": {
     "dataSource": "mysqlDS",
     "public": true
