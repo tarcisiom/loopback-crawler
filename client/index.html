@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Searching stuff</title>
+    <title>Serviço SRH</title>
     <link rel="stylesheet" href="/css/style.css"/>
     <link rel="stylesheet" href="/css/font-awesome/css/font-awesome.min.css" type="text/css">
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
@@ -21,7 +21,7 @@
       <nav>
         <ul>
           <li ng-hide="currentUser">
-            <a ui-sref="sign-up" ui-sref-active="active">Sign up</a>
+            <a ui-sref="sign-up" ui-sref-active="active">Registrar</a>
           </li>
           <li ng-show="currentUser">
             <a ui-sref="estradas" ui-sref-active="active">Ocorrências</a>
@@ -36,10 +36,10 @@
             <a ui-sref="map" ui-sref-active="active">Mapa</a>
           </li>
           <li ng-hide="currentUser">
-            <a ui-sref="login" ui-sref-active="active">Log in</a>
+            <a ui-sref="login" ui-sref-active="active">Entrar</a>
           </li>
           <li ng-show="currentUser">
-            <a ui-sref="logout" ui-sref-active="active">Log out</a>
+            <a ui-sref="logout" ui-sref-active="active">Sair</a>
           </li>
         </ul>
       </nav>
